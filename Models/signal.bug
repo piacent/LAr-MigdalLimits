@@ -1,0 +1,21 @@
+model {	
+
+   for (i in 1:n) {
+   
+   
+      x[i] ~ dpois(lambda[i])
+      
+      
+      lambda[i] <- ( rB * (bkg_f[i]) +
+                     rS * f0 * sig[i] ) * t     
+
+
+      bkg_f[i]  ~ dnorm( bkg[i] , 1/(bkg_e[i])^2  )
+
+   }
+
+   # Priors
+   f0 ~ dnorm(1, 1/(0.2)^2)
+   rB    ~ dunif(rB_true-srb, rB_true + srb);
+   rS    ~ dunif(0.0, 1e+20);
+}
